@@ -1,9 +1,12 @@
-import {Text, View, StyleSheet, ScrollView, ImageBackground} from 'react-native';
+import {Text, View, StyleSheet, ScrollView, TextInput, ImageBackground} from 'react-native';
 import { useCustomFonts } from '../utils/CustomFonts';
-import { TextInput } from 'react-native-paper';
 
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { useState } from 'react';
+
+
+import background from "../../assets/background.png";
+
 
 function Reminders () {
 
@@ -19,6 +22,8 @@ function Reminders () {
 
     return (
       <ScrollView contentContainerStyle={styles.main}>
+        <ImageBackground source={background} style={styles.img_style}>
+
         <View
           style={{
             flex: 1,
@@ -26,7 +31,7 @@ function Reminders () {
             alignItems: "center",
             width: 300,
           }}
-        >
+          >
           <Text style={styles.header}>Reminders</Text>
           <Text>profileasdfasdf</Text>
         </View>
@@ -62,10 +67,12 @@ function Reminders () {
               disableTouchEvent: true,
             },
           }}
-        />
+          />
 
         <TextInput placeholder="Add reminder"></TextInput>
         <View style={styles.main}></View>
+          </ImageBackground>
+
       </ScrollView>
     );
 };
@@ -73,7 +80,7 @@ function Reminders () {
 
 const styles = StyleSheet.create({
   main: {
-    flex: "2",
+    flex: 2,
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
@@ -100,6 +107,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 7,
   },
+  img_style: {
+    flex: 1,
+    resizeMode: "cover",
+    width: '100%',
+    alignItems: 'center',
+  }
 });
 
 

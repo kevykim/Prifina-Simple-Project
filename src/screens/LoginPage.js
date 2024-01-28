@@ -7,7 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from 'react';
 
 
-function LoginPage () {
+function LoginPage ({setLoggedIn}) {
     const fontsLoaded = useCustomFonts();
     const [isChecked, setChecked] = useState(false);
     const [email, setEmail] = useState("");
@@ -17,6 +17,12 @@ function LoginPage () {
       return null;
     }
 
+    // temporary sign in
+    const signIn = () => {
+      if (email.length > 0 && password.length > 0) {
+        setLoggedIn(true)
+      }
+    }
 
     return (
       <View style={styles.l_container}>
@@ -51,11 +57,11 @@ function LoginPage () {
                   <Ionicons name="checkmark" size={18} color="white" />
                 )}
               </Pressable>
-              <Text style={{ color: "green", fontSize: "16" }}>
+              <Text style={styles.l_rememberme}>
                 Remember me
               </Text>
             </View>
-            <TouchableOpacity style={styles.l_button}>
+            <TouchableOpacity style={styles.l_button} onPress={() => signIn()} disabled={!email && !password}>
               <View>
                 <Text style={{ color: "white" }}>Sign in</Text>
               </View>
@@ -129,6 +135,10 @@ const styles = StyleSheet.create({
     marginTop: 15,
     padding: 5,
     marginLeft: 180,
+  },
+  l_rememberme: {
+    color: "green",
+    fontSize: 16,
   },
 });
 
