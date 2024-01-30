@@ -4,7 +4,7 @@ export const useCustomFonts = () => {
     let [fontsLoaded] = useFonts({
       "Lato-Reg": require("../../assets/fonts/Lato/Lato-Regular.ttf"),
       "Lato-Bold": require("../../assets/fonts/Lato/Lato-Bold.ttf"),
-      "Lato-Italic": require("../../assets/fonts/Lato/Lato-Italic.ttf"),
+      "Lato-Light": require("../../assets/fonts/Lato/Lato-Light.ttf"),
       "Marvin": require("../../assets/fonts/Marvin/Marvin.otf")
     });
 
