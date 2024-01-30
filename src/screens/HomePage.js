@@ -1,12 +1,16 @@
-import {View, ScrollView, Text, ImageBackground, StyleSheet, Image, TouchableOpacity, Switch} from 'react-native'
+import {View, ScrollView, Text, ImageBackground, StyleSheet, Image, TouchableOpacity, Switch, Pressable} from 'react-native'
 import { useCustomFonts } from "../utils/CustomFonts";
 import { useState } from 'react';
 
 import background from '../../assets/background.png'
 import ProfileAvatar from "../../assets/icons/Profile/ProfileAvatar.png";
 import dog from '../../assets/icons/Pets/dog.jpg'
+import PetProfile from '../../assets/icons/Profile/PetProfile.png'
+import PetProfileDog from '../../assets/icons/Profile/PetProfileDog.png'
+import Carousel from "pinar";
 
-function HomePage () {
+
+function HomePage ({ navigation}) {
 
     const fontsLoaded = useCustomFonts();
       const [isEnabled, setIsEnabled] = useState(false);
@@ -30,7 +34,75 @@ function HomePage () {
             <Image source={ProfileAvatar}></Image>
           </View>
 
-          <View>{/* map pet profile cards */}</View>
+          <View style={styles.carousel}>
+            <Carousel
+              showsControls={false}
+              height={240}
+              width={220}
+              dotsContainerStyle={{
+                position: "absolute",
+                bottom: -10,
+                left: 0,
+                right: 0,
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <View style={styles.card_outer}>
+                {/* map pet profile cards */}
+
+                <Image style={styles.card_img} source={PetProfile} />
+                <View style={styles.card_info_container}>
+                  <View style={styles.card_text_container}>
+                    <Text style={styles.card_text}>{"Age:"} 3 year</Text>
+                    <Text style={styles.card_text}>{"Breed:"} Siamese Cat</Text>
+                  </View>
+
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("PetProfilePage")}
+                    style={styles.card_button}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: "Marvin",
+                        color: "white",
+                        fontSize: 16,
+                      }}
+                    >
+                      Coco
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <View style={styles.card_outer}>
+                <Image style={styles.card_img} source={PetProfileDog} />
+                <View style={styles.card_info_container}>
+                  <View style={styles.card_text_container}>
+                    <Text style={styles.card_text}>{"Age:"} 3 year</Text>
+                    <Text style={styles.card_text}>{"Breed:"} Golden Retriever</Text>
+                  </View>
+
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("PetProfilePage")}
+                    style={styles.card_button}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: "Marvin",
+                        color: "white",
+                        fontSize: 16,
+                      }}
+                    >
+                      Coco
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Carousel>
+          </View>
 
           <View style={styles.task_header}>
             <Text style={styles.all_header_text}>Tasks</Text>
@@ -59,7 +131,9 @@ function HomePage () {
                   })}
                 </Text>
               </View>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Reminders")}
+              >
                 <View style={styles.task_button}>
                   <Text
                     style={{
@@ -135,14 +209,68 @@ const styles = StyleSheet.create({
     marginTop: 3,
     fontSize: 23,
   },
+  carousel: {
+    // height: 282,
+    // width: 220,
+  },
+  card_outer: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 220,
+    height: 235,
+    backgroundColor: "#fcf0e8",
+    borderWidth: 0.5,
+    borderColor: "#F7945E",
+    borderRadius: 25,
+    shadowColor: "#F7945E",
+    shadowOffset: { width: -1, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 7,
+  },
+  card_img: {
+    position: "absolute",
+    width: 200,
+    height: 215,
+    borderRadius: 25,
+  },
+  card_info_container: {
+    height: 110,
+    backgroundColor: "rgba(236, 240, 243, 0.6)",
+    width: 200,
+    borderBottomRightRadius: 25,
+    borderBottomLeftRadius: 25,
+    justifyContent: "space-around",
+    alignItems: "center",
+    position: "absolute",
+    bottom: 9,
+  },
+  card_text_container: {
+    width: 155,
+    height: 50,
+    justifyContent: 'space-between'
+  },
+  card_text: {
+    fontFamily: 'Lato-Reg',
+    fontSize: 16
+  },
+  card_button: {
+    backgroundColor: "#F7945E",
+    height: 35,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 25,
+    width: 160,
+  },
+
   task_header: {
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 2,
     alignItems: "center",
     width: 326,
-    marginTop: 12,
     marginBottom: 12,
+    marginTop: 10,
   },
   all_header_text: {
     fontFamily: "Lato-Bold",
@@ -164,7 +292,6 @@ const styles = StyleSheet.create({
   },
   task_container: {
     justifyContent: "space-between",
-    padding: 2,
     width: 310,
     height: 125,
     backgroundColor: "white",
@@ -218,12 +345,12 @@ const styles = StyleSheet.create({
     padding: 25,
   },
   reminder_text_top: {
-    fontFamily: 'Lato-Reg'
+    fontFamily: "Lato-Reg",
   },
   reminder_text_bottom: {
-    fontFamily: 'Lato-Reg',
+    fontFamily: "Lato-Reg",
     fontSize: 24,
-    padding: 5
+    padding: 5,
   },
   pet_image: {
     height: 60,

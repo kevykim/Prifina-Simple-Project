@@ -36,7 +36,7 @@ return (
           ></Image>
           ),
         }}
-        name="Pet"
+        name="PetProfilePage"
         component={PetProfilePage}
         />
     <Tab.Screen
