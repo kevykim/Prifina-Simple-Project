@@ -2,6 +2,7 @@ import { ImageBackground, StyleSheet, Text, View } from 'react-native';
 import { useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import LoginPage from './src/screens/LoginPage';
 
@@ -18,20 +19,22 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-    <SafeAreaProvider>
-      <NavigationContainer>
-        {isLoggedIn ? (
-          <NavigationBar>
-          </NavigationBar>
-        ) : (
-          <ImageBackground source={background} style={styles.view_container}>
-            <LoginPage setLoggedIn={fakeSignIn} />
-          </ImageBackground>
-        )}
-      </NavigationContainer>
-    </SafeAreaProvider>
-    </View>
+    <GestureHandlerRootView style={styles.container}>
+        <SafeAreaProvider>
+          <NavigationContainer>
+            {isLoggedIn ? (
+              <NavigationBar></NavigationBar>
+            ) : (
+              <ImageBackground
+                source={background}
+                style={styles.view_container}
+              >
+                <LoginPage setLoggedIn={fakeSignIn} />
+              </ImageBackground>
+            )}
+          </NavigationContainer>
+        </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }
 

@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     height: 64,
   },
   navIcon: {
-    position: "relative",
-    top: 15,
+    position: "absolute",
+    top: 8,
   },
 });

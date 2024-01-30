@@ -1,4 +1,4 @@
-import {Text, View, StyleSheet, ScrollView, TextInput, ImageBackground, Image, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, ScrollView, TextInput, ImageBackground, Image, TouchableOpacity, Alert} from 'react-native';
 import { useCustomFonts } from '../utils/CustomFonts';
 
 import { Calendar, LocaleConfig } from "react-native-calendars";
@@ -9,6 +9,10 @@ import background from "../../assets/background.png";
 import ProfileAvatar from '../../assets/icons/Profile/ProfileAvatar.png'
 import dog from '../../assets/icons/Pets/dog.jpg'
 import { FontAwesome } from "@expo/vector-icons";
+
+import Swipeable from "react-native-gesture-handler/Swipeable";
+import complete from '../../assets/icons/reminder_icons/complete.png'
+import edit from '../../assets/icons/reminder_icons/edit.png'
 
 function Reminders () {
 
@@ -29,6 +33,21 @@ function Reminders () {
     const onPress = () => {
 
     }
+
+      const renderRightActions = () => {
+
+        return (
+         <View style={styles.swipe_container}>
+          <TouchableOpacity onPress={() => Alert.alert('Edit')}>
+            <Image style={styles.orange_button} source={edit}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => Alert.alert('Complete')}>
+            <Image style={styles.green_button} source={complete}/>
+          </TouchableOpacity>
+
+         </View>
+        );
+      };
 
     return (
       <ScrollView contentContainerStyle={styles.main}>
@@ -78,9 +97,9 @@ function Reminders () {
             }}
           />
           <View style={styles.date_container}>
-            <View style={{ flexDirection: "row", alignItems:'center' }}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
               <FontAwesome name="paw" size={14} color="#F7945E" />
-              <Text style={{ fontFamily: "Lato-Reg" }}>   Today: </Text>
+              <Text style={{ fontFamily: "Lato-Reg" }}> Today: </Text>
               <Text style={{ fontFamily: "Lato-Bold", color: "#F7945E" }}>
                 {date}
               </Text>
@@ -92,14 +111,29 @@ function Reminders () {
           <TextInput placeholder="Add reminder"></TextInput>
 
           {/* MAP OUT ALL REMINDERS WITH VIEW */}
-          <View style={{marginTop: 5}}>
-          <View style={styles.reminder_container}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Image style={styles.pet_image} source={dog}></Image>
-            <Text style={{ fontFamily: "Lato-Reg", marginLeft: 10 }}>  Reminders here</Text>
+          <View style={styles.reminder_outer}>
+            <View style={styles.reminder_container}>
+              <Swipeable renderRightActions={renderRightActions}>
+                <View style={styles.swipe_box}>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Image style={styles.pet_image} source={dog}></Image>
+                    <Text style={{ fontFamily: "Lato-Reg", marginLeft: 10 }}>
+                      {" "}
+                      Reminders here
+                    </Text>
+                  </View>
+                  <Text
+                    style={{
+                      fontFamily: "Lato-Reg",
+                      color: "#F7945E",
+                      marginRight: 25,
+                    }}
+                  >
+                    2:39PM
+                  </Text>
+                </View>
+              </Swipeable>
             </View>
-            <Text style={{ fontFamily: "Lato-Reg", color: "#F7945E", marginRight: 25 }}>2:39PM</Text>
-          </View>
           </View>
         </ImageBackground>
       </ScrollView>
@@ -156,14 +190,29 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  reminder_container: {
-    padding: 10,
+  reminder_outer: {
+    marginTop: 5,
+    alignItems: "center",
+    justifyContent: "center",
     width: 326,
     height: 56,
+    backgroundColor: "#fcf0e8",
+    borderWidth: 0.5,
+    borderColor: "#F7945E",
+    borderRadius: 15,
+    shadowColor: "#F7945E",
+    shadowOffset: { width: -1, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 7,
+  },
+  reminder_container: {
+    padding: 10,
+    width: 316,
+    height: 46,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    borderWidth: 4,
+    borderWidth: 0.5,
     borderColor: "#F7BA9B",
     borderRadius: 15,
     backgroundColor: "white",
@@ -178,6 +227,27 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 6,
+  },
+  swipe_box: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: 310,
+  },
+  swipe_container: {
+    flexDirection: "row",
+    width: 85,
+  },
+
+  orange_button: {
+    height: 40,
+    width: 40,
+  },
+  green_button: {
+    height: 40,
+    width: 40,
+    borderTopRightRadius: 15,
+    borderBottomRightRadius: 15,
   },
 });
 
