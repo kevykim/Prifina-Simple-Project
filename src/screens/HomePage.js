@@ -25,165 +25,171 @@ function HomePage ({ navigation}) {
 
     return (
       <ScrollView contentContainerStyle={styles.main}>
-        <ImageBackground source={background} style={styles.img_style}>
-          <View style={styles.header}>
-            <View>
-              <Text style={styles.header_font_top}>Welcome Back!</Text>
-              <Text style={styles.header_font_bot}>TestUser</Text>
-            </View>
-            <Image source={ProfileAvatar}></Image>
-          </View>
-
-          <View style={styles.carousel}>
-            <Carousel
-              showsControls={false}
-              height={240}
-              width={220}
-              dotsContainerStyle={{
-                position: "absolute",
-                bottom: -10,
-                left: 0,
-                right: 0,
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <View style={styles.card_outer}>
-                {/* map pet profile cards */}
-
-                <Image style={styles.card_img} source={PetProfile} />
-                <View style={styles.card_info_container}>
-                  <View style={styles.card_text_container}>
-                    <Text style={styles.card_text}>{"Age:"} 3 year</Text>
-                    <Text style={styles.card_text}>{"Breed:"} Siamese Cat</Text>
-                  </View>
-
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate("PetProfilePage")}
-                    style={styles.card_button}
-                  >
-                    <Text
-                      style={{
-                        fontFamily: "Marvin",
-                        color: "white",
-                        fontSize: 16,
-                      }}
-                    >
-                      Coco
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-
-              <View style={styles.card_outer}>
-                <Image style={styles.card_img} source={PetProfileDog} />
-                <View style={styles.card_info_container}>
-                  <View style={styles.card_text_container}>
-                    <Text style={styles.card_text}>{"Age:"} 3 year</Text>
-                    <Text style={styles.card_text}>{"Breed:"} Golden Retriever</Text>
-                  </View>
-
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate("PetProfilePage")}
-                    style={styles.card_button}
-                  >
-                    <Text
-                      style={{
-                        fontFamily: "Marvin",
-                        color: "white",
-                        fontSize: 16,
-                      }}
-                    >
-                      Coco
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </Carousel>
-          </View>
-
-          <View style={styles.task_header}>
-            <Text style={styles.all_header_text}>Tasks</Text>
-            <TouchableOpacity>
+          <ImageBackground source={background} style={styles.img_style}>
+            <View style={styles.header}>
               <View>
-                <Text style={{ fontFamily: "Lato-Bold", color: "#F7945E" }}>
-                  See more
-                </Text>
+                <Text style={styles.header_font_top}>Welcome Back!</Text>
+                <Text style={styles.header_font_bot}>TestUser</Text>
               </View>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.task_outer}>
-            <View style={styles.task_container}>
-              <View style={styles.task_text}>
-                <Text style={{ fontFamily: "Lato-Bold" }}>3</Text>
-                <Text style={{ fontFamily: "Lato-Bold", color: "#F7945E" }}>
-                  {" "}
-                  NEW{" "}
-                </Text>
-                <Text style={{ fontFamily: "Lato-Bold" }}>tasks for </Text>
-                <Text style={{ fontFamily: "Lato-Bold" }}>
-                  {new Date().toLocaleDateString("en-US", {
-                    month: "numeric",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
-                </Text>
-              </View>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Reminders")}
+              <Image source={ProfileAvatar}></Image>
+            </View>
+
+            <View style={styles.carousel}>
+              <Carousel
+                showsControls={false}
+                height={240}
+                width={220}
+                dotsContainerStyle={{
+                  position: "absolute",
+                  bottom: -10,
+                  left: 0,
+                  right: 0,
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
               >
-                <View style={styles.task_button}>
-                  <Text
-                    style={{
-                      fontFamily: "Marvin",
-                      color: "white",
-                      fontSize: 16,
-                    }}
-                  >
-                    Check Schedule
+                <View style={styles.card_outer}>
+                  {/* map pet profile cards */}
+
+                  <Image style={styles.card_img} source={PetProfile} />
+                  <View style={styles.card_info_container}>
+                    <View style={styles.card_text_container}>
+                      <Text style={styles.card_text}>{"Age:"} 3 year</Text>
+                      <Text style={styles.card_text}>
+                        {"Breed:"} Siamese Cat
+                      </Text>
+                    </View>
+
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("PetProfilePage")}
+                      style={styles.card_button}
+                    >
+                      <Text
+                        style={{
+                          fontFamily: "Marvin",
+                          color: "white",
+                          fontSize: 16,
+                        }}
+                      >
+                        Coco
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                <View style={styles.card_outer}>
+                  <Image style={styles.card_img} source={PetProfileDog} />
+                  <View style={styles.card_info_container}>
+                    <View style={styles.card_text_container}>
+                      <Text style={styles.card_text}>{"Age:"} 3 year</Text>
+                      <Text style={styles.card_text}>
+                        {"Breed:"} Golden Retriever
+                      </Text>
+                    </View>
+
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("PetProfilePage")}
+                      style={styles.card_button}
+                    >
+                      <Text
+                        style={{
+                          fontFamily: "Marvin",
+                          color: "white",
+                          fontSize: 16,
+                        }}
+                      >
+                        Coco
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </Carousel>
+            </View>
+
+            <View style={styles.task_header}>
+              <Text style={styles.all_header_text}>Tasks</Text>
+              <TouchableOpacity>
+                <View>
+                  <Text style={{ fontFamily: "Lato-Bold", color: "#F7945E" }}>
+                    See more
                   </Text>
                 </View>
               </TouchableOpacity>
             </View>
-          </View>
-
-          <View>
-            <View style={styles.reminders_header_container}>
-              <Text style={styles.all_header_text}>Reminders</Text>
-              <Text></Text>
-            </View>
-          </View>
-
-          {/* MAP OUT ALL REMINDERS */}
-          <View style={styles.reminder_outer}>
-            <View style={styles.reminder_container}>
-              <Image style={styles.pet_image} source={dog}></Image>
-              <View>
-                <Text style={styles.reminder_text_top}>Bathroom Break</Text>
-                <Text style={styles.reminder_text_bottom}>At 2:30</Text>
+            <View style={styles.task_outer}>
+              <View style={styles.task_container}>
+                <View style={styles.task_text}>
+                  <Text style={{ fontFamily: "Lato-Bold" }}>3</Text>
+                  <Text style={{ fontFamily: "Lato-Bold", color: "#F7945E" }}>
+                    {" "}
+                    NEW{" "}
+                  </Text>
+                  <Text style={{ fontFamily: "Lato-Bold" }}>tasks for </Text>
+                  <Text style={{ fontFamily: "Lato-Bold" }}>
+                    {new Date().toLocaleDateString("en-US", {
+                      month: "numeric",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Reminders")}
+                >
+                  <View style={styles.task_button}>
+                    <Text
+                      style={{
+                        fontFamily: "Marvin",
+                        color: "white",
+                        fontSize: 16,
+                      }}
+                    >
+                      Check Schedule
+                    </Text>
+                  </View>
+                </TouchableOpacity>
               </View>
-              <Switch
-                trackColor={{ false: "#767577", true: "#F7945E" }}
-                thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
-                onValueChange={toggleSwitch}
-                value={isEnabled}
-              ></Switch>
             </View>
-          </View>
-        </ImageBackground>
-      </ScrollView>
+
+            <View>
+              <View style={styles.reminders_header_container}>
+                <Text style={styles.all_header_text}>Reminders</Text>
+                <Text></Text>
+              </View>
+            </View>
+
+            {/* MAP OUT ALL REMINDERS */}
+            <View style={styles.reminder_outer}>
+              <View style={styles.reminder_container}>
+                <Image style={styles.pet_image} source={dog}></Image>
+                <View>
+                  <Text style={styles.reminder_text_top}>Bathroom Break</Text>
+                  <Text style={styles.reminder_text_bottom}>At 2:30</Text>
+                </View>
+                <Switch
+                  trackColor={{ false: "#767577", true: "#F7945E" }}
+                  thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+                  onValueChange={toggleSwitch}
+                  value={isEnabled}
+                ></Switch>
+              </View>
+            </View>
+          </ImageBackground>
+        </ScrollView>
+
     );
 };
 
 
 const styles = StyleSheet.create({
   main: {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    width: '100%',
   },
   img_style: {
     flex: 1,
@@ -195,7 +201,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 65,
+    marginTop: 45,
     width: 326,
     padding: 2,
     height: 100,
@@ -248,11 +254,11 @@ const styles = StyleSheet.create({
   card_text_container: {
     width: 155,
     height: 50,
-    justifyContent: 'space-between'
+    justifyContent: "space-between",
   },
   card_text: {
-    fontFamily: 'Lato-Reg',
-    fontSize: 16
+    fontFamily: "Lato-Reg",
+    fontSize: 16,
   },
   card_button: {
     backgroundColor: "#F7945E",
@@ -332,6 +338,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: -1, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 7,
+    marginBottom: 100
   },
   reminder_container: {
     flexDirection: "row",

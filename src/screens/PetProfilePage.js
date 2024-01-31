@@ -23,7 +23,7 @@ function PetProfilePage({navigation}) {
   
 
   return (
-    <View style={styles.main}>
+    <ScrollView contentContainerStyle={styles.main}>
       <ImageBackground source={background} style={styles.img_style}>
         <View style={styles.petprofile_header}>
           <TouchableOpacity onPress={() => navigation.navigate("HomePage")}>
@@ -136,16 +136,17 @@ function PetProfilePage({navigation}) {
           </View>
         </View>
       </ImageBackground>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   main: {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    width: "100%",
   },
   img_style: {
     flex: 1,
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
     width: 326,
     padding: 2,
     height: 100,
-    marginTop: 65,
+    marginTop: 45,
   },
   left_button: {
     height: 60,
@@ -309,6 +310,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: -1, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 7,
+    marginBottom: 100,
   },
   calendar_container: {
     width: 316,
