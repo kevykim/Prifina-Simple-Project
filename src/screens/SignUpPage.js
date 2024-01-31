@@ -11,14 +11,16 @@ import { useState, useEffect, useRef } from 'react';
 
 
 
-function LoginPage ({navigation, setFakeLogin}) {
+function SignUpPage ({navigation}) {
 
       const secondInputRef = useRef(null);
+      const thirdInputRef = useRef(null);
 
     const fontsLoaded = useCustomFonts();
     const [isChecked, setChecked] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmpassword, setConfirmPassword] = useState("")
     const [errors, setErrors] = useState([])
     const [submitted, setSubmitted] = useState(false)
 
@@ -44,7 +46,7 @@ function LoginPage ({navigation, setFakeLogin}) {
 
 
     // temporary sign in
-    const signIn = () => {
+    const signUp = () => {
   let errorMessage = [];
 
   if (!email.includes('@')) {
@@ -55,35 +57,39 @@ function LoginPage ({navigation, setFakeLogin}) {
     errorMessage.push('Please enter your password');
   }
 
+  if (password !== confirmpassword) {
+    errorMessage.push('Passwords must match')
+  }
+
   setErrors(errorMessage);
 
   if (email.length > 0 && password.length > 0 && errorMessage.length === 0) {
-    setFakeLogin(true);
+    navigation.navigate("LoginPage")
   }
 
   setSubmitted(!submitted);
 };
 
     return (
-      <View style={styles.l_container}>
+      <View style={styles.s_container}>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={styles.l_keyboardAvoidingView}
+          style={styles.s_keyboardAvoidingView}
         >
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <ImageBackground style={styles.l_background} source={background}>
-              <View style={styles.l_box}>
+            <ImageBackground style={styles.s_background} source={background}>
+              <View style={styles.s_box}>
                 <View style={{ alignItems: "center" }}>
                   <Image source={require("../../assets/Logo.png")} />
                 </View>
                 <View style={{ height: 350, justifyContent: "space-between" }}>
-                  <Text style={styles.l_text_top}>Login</Text>
-                  <Text style={styles.l_text_bot}>
-                    Please sign in to continue
+                  <Text style={styles.s_text_top}>Sign up</Text>
+                  <Text style={styles.s_text_bot}>
+                    Please sign up to continue
                   </Text>
                   <View>
                     <TextInput
-                      style={styles.l_input}
+                      style={styles.s_input}
                       placeholder="email"
                       onChangeText={(e) => setEmail(e)}
                       value={email}
@@ -93,7 +99,7 @@ function LoginPage ({navigation, setFakeLogin}) {
                         secondInputRef.current.focus();
                       }}
                     />
-                    <Image style={styles.l_input_icon_e} source={emailicon} />
+                    <Image style={styles.s_input_icon_e} source={emailicon} />
                     <View style={{ height: 20, marginLeft: 15 }}>
                       {errors.length && submitted ? (
                         <Text style={styles.errortext}>{"Invalid Email"}</Text>
@@ -105,18 +111,17 @@ function LoginPage ({navigation, setFakeLogin}) {
                   <View>
                     <TextInput
                       ref={secondInputRef}
-                      style={styles.l_input}
+                      style={styles.s_input}
                       placeholder={"password"}
                       onChangeText={(p) => setPassword(p)}
                       secureTextEntry
                       value={password}
-                      returnKeyType="done"
+                      returnKeyType="next"
                       onSubmitEditing={() => {
-                        signIn();
-                        Keyboard.dismiss();
+                        thirdInputRefInputRef.current.focus();
                       }}
                     />
-                    <Image style={styles.l_input_icon_p} source={passicon} />
+                    <Image style={styles.s_input_icon_p} source={passicon} />
                     <View style={{ height: 20, marginLeft: 15 }}>
                       {errors.length && submitted ? (
                         <Text style={styles.errortext}>
@@ -127,28 +132,37 @@ function LoginPage ({navigation, setFakeLogin}) {
                       )}
                     </View>
                   </View>
-                  <View style={styles.l_checkbox}>
-                    <Pressable
-                      style={[styles.checkbox, isChecked && styles.l_checked]}
-                      onPress={() => setChecked(!isChecked)}
-                    >
-                      {isChecked && (
-                        <Ionicons name="checkmark" size={18} color="white" />
+                  <View>
+                    <TextInput
+                      ref={thirdInputRef}
+                      style={styles.s_input}
+                      placeholder={"confirm password"}
+                      onChangeText={(p) => setConfirmPassword(p)}
+                      secureTextEntry
+                      value={confirmpassword}
+                      returnKeyType="done"
+                      onSubmitEditing={() => {
+                        signUp();
+                        Keyboard.dismiss();
+                      }}
+                    />
+                    <Image style={styles.s_input_icon_p} source={passicon} />
+                    <View style={{ height: 20, marginLeft: 15 }}>
+                      {errors.length && submitted ? (
+                        <Text style={styles.errortext}>
+                          {"Passwords must match"}
+                        </Text>
+                      ) : (
+                        <Text></Text>
                       )}
-                    </Pressable>
-                    {/* <TouchableOpacity
-                      onPress={() => navigation.navigate("SignUpPage")}
-                    >
-                      <Text>Sign up</Text>
-                    </TouchableOpacity> */}
-                    <Text style={styles.l_rememberme}>Remember me</Text>
+                    </View>
                   </View>
                   <TouchableOpacity
-                    style={styles.l_button}
-                    onPress={() => signIn()}
+                    style={styles.s_button}
+                    onPress={() => signUp()}
                   >
                     <View>
-                      <Text style={{ color: "white" }}>Sign in</Text>
+                      <Text style={{ color: "white" }}>Sign Up</Text>
                     </View>
                   </TouchableOpacity>
                 </View>
@@ -160,38 +174,43 @@ function LoginPage ({navigation, setFakeLogin}) {
     );
 };
 
+
+export default SignUpPage;
+
+
+
 const styles = StyleSheet.create({
-  l_keyboardAvoidingView: {
+  s_keyboardAvoidingView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
   },
-  l_container: {
+  s_container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-  l_background: {
+  s_background: {
     flex: 1,
     resizeMode: "cover",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
   },
-  l_box: {
+  s_box: {
     justifyContent: "space-around",
     height: 600,
   },
-  l_text_top: {
+  s_text_top: {
     fontFamily: "Lato-Reg",
     fontSize: 36,
   },
-  l_text_bot: {
+  s_text_bot: {
     fontFamily: "Lato-Reg",
     marginBottom: 20,
   },
-  l_input: {
+  s_input: {
     backgroundColor: "white",
     width: 288,
     height: 45,
@@ -204,17 +223,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 5,
   },
-  l_input_icon_e: {
+  s_input_icon_e: {
     position: "absolute",
     top: 15,
     left: 18,
   },
-  l_input_icon_p: {
+  s_input_icon_p: {
     position: "absolute",
     top: 13,
     left: 22,
   },
-  l_checkbox: {
+  s_checkbox: {
     fontFamily: "Lato-Reg",
     flexDirection: "row",
     marginLeft: 150,
@@ -234,10 +253,10 @@ const styles = StyleSheet.create({
     borderColor: "green",
     backgroundColor: "transparent",
   },
-  l_checked: {
+  s_checked: {
     backgroundColor: "green",
   },
-  l_button: {
+  s_button: {
     backgroundColor: "#F7945E",
     width: 104,
     height: 40,
@@ -248,7 +267,7 @@ const styles = StyleSheet.create({
     padding: 5,
     marginLeft: 180,
   },
-  l_rememberme: {
+  s_rememberme: {
     color: "green",
     fontSize: 16,
   },
@@ -258,7 +277,3 @@ const styles = StyleSheet.create({
     color: "red",
   },
 });
-
-
-
-export default LoginPage;

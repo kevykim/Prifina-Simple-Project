@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   navBarStyle: {
     position: "absolute",
     borderTopWidth: 0,
-    bottom: 35,
+    bottom: 25,
     left: 90,
     backgroundColor: "#52B788",
     borderRadius: 30,

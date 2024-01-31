@@ -143,17 +143,18 @@ function Reminders () {
 
 const styles = StyleSheet.create({
   main: {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    width: "100%",
   },
   header_container: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     width: 326,
-    marginTop: 65,
+    marginTop: 45,
     height: 100,
     padding: 2,
   },
@@ -204,6 +205,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: -1, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 7,
+    marginBottom: 100,
   },
   reminder_container: {
     padding: 10,
