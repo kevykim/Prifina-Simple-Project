@@ -3,182 +3,181 @@ import { useCustomFonts } from "../utils/CustomFonts";
 import { useState } from 'react';
 
 import background from '../../assets/background.png'
-import ProfileAvatar from "../../assets/icons/Profile/ProfileAvatar.png";
 import dog from '../../assets/icons/Pets/dog.jpg'
-import PetProfile from '../../assets/icons/Profile/PetProfile.png'
-import PetProfileDog from '../../assets/icons/Profile/PetProfileDog.png'
 import Carousel from "pinar";
 
+import { useFakeDatabase } from '../../context/FakeDataBase';
 
 function HomePage ({ navigation}) {
+    const { database, updateAlarm, addReminder, updateReminder, deleteReminder } =
+      useFakeDatabase();
+
+    const allPets = Object.values(database.FakeUser.pets)
+
+    const currentDate = new Date();
+
+     const today = currentDate.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+      });
+
+    const alltasks = Object.values(database.FakeUser.reminders)
+
+    const todaytasks = alltasks.filter(task => task.date === today && task.completed === false)
+    
 
     const fontsLoaded = useCustomFonts();
-      const [isEnabled, setIsEnabled] = useState(false);
 
     if (!fontsLoaded) {
         return null;
     }
 
-    const toggleSwitch = () => {
-      setIsEnabled((previousState) => !previousState);
-    };
 
     return (
       <ScrollView contentContainerStyle={styles.main}>
-          <ImageBackground source={background} style={styles.img_style}>
-            <View style={styles.header}>
+        <ImageBackground source={background} style={styles.img_style}>
+          <View style={styles.header}>
+            <View>
+              <Text style={styles.header_font_top}>Welcome Back!</Text>
+              <Text style={styles.header_font_bot}>
+                {database.FakeUser.userinfo.name}
+              </Text>
+            </View>
+            <Image source={database.FakeUser.userinfo.profileImg}></Image>
+          </View>
+
+          <View style={styles.carousel}>
+            <Carousel
+              showsControls={false}
+              height={240}
+              width={220}
+              dotsContainerStyle={{
+                position: "absolute",
+                bottom: -10,
+                left: 0,
+                right: 0,
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {allPets.map((pet) => (
+                <View key={pet.id} style={styles.card_outer}>
+                  <Image style={styles.card_img} source={pet.petImg} />
+                  <View style={styles.card_info_container}>
+                    <View style={styles.card_text_container}>
+                      <Text style={styles.card_text}>
+                        {"Age:"} {pet.age} {"years"}
+                      </Text>
+                      <Text style={styles.card_text}>
+                        {"Breed:"} {pet.breed}
+                      </Text>
+                    </View>
+
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("PetProfilePage", {pet})}
+                      style={styles.card_button}
+                    >
+                      <Text
+                        style={{
+                          fontFamily: "Marvin",
+                          color: "white",
+                          fontSize: 16,
+                        }}
+                      >
+                        {pet.name}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              ))}
+            </Carousel>
+          </View>
+
+          <View style={styles.task_header}>
+            <Text style={styles.all_header_text}>Tasks</Text>
+            <TouchableOpacity onPress={() => navigation.navigate("Reminders")}>
               <View>
-                <Text style={styles.header_font_top}>Welcome Back!</Text>
-                <Text style={styles.header_font_bot}>TestUser</Text>
+                <Text style={{ fontFamily: "Lato-Bold", color: "#F7945E" }}>
+                  See more
+                </Text>
               </View>
-              <Image source={ProfileAvatar}></Image>
-            </View>
-
-            <View style={styles.carousel}>
-              <Carousel
-                showsControls={false}
-                height={240}
-                width={220}
-                dotsContainerStyle={{
-                  position: "absolute",
-                  bottom: -10,
-                  left: 0,
-                  right: 0,
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
+            </TouchableOpacity>
+          </View>
+          <View style={styles.task_outer}>
+            <View style={styles.task_container}>
+              <View style={styles.task_text}>
+                <Text style={{ fontFamily: "Lato-Bold" }}>
+                  {todaytasks.length}
+                </Text>
+                <Text style={{ fontFamily: "Lato-Bold", color: "#F7945E" }}>
+                  {" "}
+                  NEW{" "}
+                </Text>
+                <Text style={{ fontFamily: "Lato-Bold" }}>tasks for </Text>
+                <Text style={{ fontFamily: "Lato-Bold" }}>
+                  {new Date().toLocaleDateString("en-US", {
+                    month: "numeric",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </Text>
+              </View>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Reminders")}
               >
-                <View style={styles.card_outer}>
-                  {/* map pet profile cards */}
-
-                  <Image style={styles.card_img} source={PetProfile} />
-                  <View style={styles.card_info_container}>
-                    <View style={styles.card_text_container}>
-                      <Text style={styles.card_text}>{"Age:"} 3 year</Text>
-                      <Text style={styles.card_text}>
-                        {"Breed:"} Siamese Cat
-                      </Text>
-                    </View>
-
-                    <TouchableOpacity
-                      onPress={() => navigation.navigate("PetProfilePage")}
-                      style={styles.card_button}
-                    >
-                      <Text
-                        style={{
-                          fontFamily: "Marvin",
-                          color: "white",
-                          fontSize: 16,
-                        }}
-                      >
-                        Coco
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-
-                <View style={styles.card_outer}>
-                  <Image style={styles.card_img} source={PetProfileDog} />
-                  <View style={styles.card_info_container}>
-                    <View style={styles.card_text_container}>
-                      <Text style={styles.card_text}>{"Age:"} 3 year</Text>
-                      <Text style={styles.card_text}>
-                        {"Breed:"} Golden Retriever
-                      </Text>
-                    </View>
-
-                    <TouchableOpacity
-                      onPress={() => navigation.navigate("PetProfilePage")}
-                      style={styles.card_button}
-                    >
-                      <Text
-                        style={{
-                          fontFamily: "Marvin",
-                          color: "white",
-                          fontSize: 16,
-                        }}
-                      >
-                        Coco
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </Carousel>
-            </View>
-
-            <View style={styles.task_header}>
-              <Text style={styles.all_header_text}>Tasks</Text>
-              <TouchableOpacity>
-                <View>
-                  <Text style={{ fontFamily: "Lato-Bold", color: "#F7945E" }}>
-                    See more
+                <View style={styles.task_button}>
+                  <Text
+                    style={{
+                      fontFamily: "Marvin",
+                      color: "white",
+                      fontSize: 16,
+                    }}
+                  >
+                    Check Schedule
                   </Text>
                 </View>
               </TouchableOpacity>
             </View>
-            <View style={styles.task_outer}>
-              <View style={styles.task_container}>
-                <View style={styles.task_text}>
-                  <Text style={{ fontFamily: "Lato-Bold" }}>3</Text>
-                  <Text style={{ fontFamily: "Lato-Bold", color: "#F7945E" }}>
-                    {" "}
-                    NEW{" "}
-                  </Text>
-                  <Text style={{ fontFamily: "Lato-Bold" }}>tasks for </Text>
-                  <Text style={{ fontFamily: "Lato-Bold" }}>
-                    {new Date().toLocaleDateString("en-US", {
-                      month: "numeric",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
-                  </Text>
-                </View>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("Reminders")}
-                >
-                  <View style={styles.task_button}>
-                    <Text
-                      style={{
-                        fontFamily: "Marvin",
-                        color: "white",
-                        fontSize: 16,
-                      }}
-                    >
-                      Check Schedule
+          </View>
+
+          <View>
+            <View style={styles.reminders_header_container}>
+              <Text style={styles.all_header_text}>Reminders</Text>
+              <Text></Text>
+            </View>
+          </View>
+
+          <View style={{ marginBottom: 100 }}>
+            {/* MAP OUT ALL REMINDERS */}
+            {todaytasks.map((task) => (
+              <View key={task.id} style={styles.reminder_outer}>
+                <View style={styles.reminder_container}>
+                  <Image style={styles.pet_image} source={task.petImg}></Image>
+                  <View>
+                    <Text style={styles.reminder_text_top}>{task.message}</Text>
+                    <Text style={styles.reminder_text_bottom}>
+                      At {task.time}
                     </Text>
                   </View>
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            <View>
-              <View style={styles.reminders_header_container}>
-                <Text style={styles.all_header_text}>Reminders</Text>
-                <Text></Text>
-              </View>
-            </View>
-
-            {/* MAP OUT ALL REMINDERS */}
-            <View style={styles.reminder_outer}>
-              <View style={styles.reminder_container}>
-                <Image style={styles.pet_image} source={dog}></Image>
-                <View>
-                  <Text style={styles.reminder_text_top}>Bathroom Break</Text>
-                  <Text style={styles.reminder_text_bottom}>At 2:30</Text>
+                  <Switch
+                    trackColor={{ false: "#767577", true: "#F7945E" }}
+                    thumbColor={task.alarm ? "#f4f3f4" : "#f4f3f4"}
+                    onValueChange={() => {
+                      const updatedAlarm = { ...task, alarm: !task.alarm }
+                      updateAlarm(updatedAlarm)
+                    }}
+                    value={task.alarm}
+                  ></Switch>
                 </View>
-                <Switch
-                  trackColor={{ false: "#767577", true: "#F7945E" }}
-                  thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
-                  onValueChange={toggleSwitch}
-                  value={isEnabled}
-                ></Switch>
               </View>
-            </View>
-          </ImageBackground>
-        </ScrollView>
-
+            ))}
+            
+          </View>
+        </ImageBackground>
+      </ScrollView>
     );
 };
 
@@ -338,7 +337,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: -1, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 7,
-    marginBottom: 100
   },
   reminder_container: {
     flexDirection: "row",
