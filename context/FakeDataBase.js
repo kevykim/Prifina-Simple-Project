@@ -38,7 +38,7 @@ export const FakeDatabaseProvider = ({ children }) => {
       pets: {
         1: { id: 1, name: "Coco", age : 3, breed : 'Siamese Cat', petImg: require('../assets/icons/Profile/PetProfile.png'), vet: 'Perfect Care Vet Center', street: '123 PetCare Lane', city: 'Northland', state: 'ES 12345', },
         2: { id: 2, name: "Buddy", age : 2, breed: 'Gold Retriever', petImg: require('../assets/icons/Profile/PetProfileDog.png'), vet: 'Comfort Critters Hospital', street: '456 VetStreet Ave', city: 'DreamLand', state: 'ML 67890'  },
-        3: { id: 3, name: "Whiskers", age : 2, breed: 'Noodle', petImg: require('../assets/icons/Profile/Ferret.jpeg'), vet: 'Healing Paws Clinic', street: '789 PawPlace Road', city: 'Enchanted Isle', state: 'ST 98765' },
+        3: { id: 3, name: "Noodle", age : 2, breed: 'Ferret', petImg: require('../assets/icons/Profile/Ferret.jpeg'), vet: 'Healing Paws Clinic', street: '789 PawPlace Road', city: 'Enchanted Isle', state: 'ST 98765' },
       },
 
       reminders: {
@@ -67,34 +67,36 @@ export const FakeDatabaseProvider = ({ children }) => {
         23: { id: 23, petId: 1, message: "Morning exercise", time: "7:30 PM", date: dateArray[1], petImg: require('../assets/icons/Profile/PetProfile.png'), alarm : false, completed : false  },
         24: { id: 24, petId: 1, message: "Check water bowl", time: "9:00 PM", date: dateArray[2], petImg: require('../assets/icons/Profile/PetProfile.png'), alarm : false, completed : false  },
         25: { id: 25, petId: 1, message: "Sunbathing time", time: "10:30 PM", date: dateArray[3], petImg: require('../assets/icons/Profile/PetProfile.png'), alarm : false, completed : false   },
-        26: { id: 26, petId: 1, message: "Training session", time: "12:00 AM", date: dateArray[4], petImg: require('../assets/icons/Profile/PetProfile.png'), alarm : false, completed : false  },
-        27: { id: 27, petId: 1, message: "Hide treats for fun", time: "1:30 AM", date: dateArray[5], petImg: require('../assets/icons/Profile/PetProfile.png'), alarm : false, completed : false  },
-        28: { id: 28, petId: 1, message: "Evening stroll", time: "3:00 AM", date: dateArray[6], petImg: require('../assets/icons/Profile/PetProfile.png'), alarm : false, completed : false  },
-        29: { id: 29, petId: 2, message: "Play with toys", time: "4:30 AM", date: dateArray[0], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
-        30: { id: 30, petId: 2, message: "Bathroom Break", time: "6:00 AM", date: dateArray[1], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
-        31: { id: 31, petId: 2, message: "Take a walk", time: "7:30 AM", date: dateArray[2], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
-        32: { id: 32, petId: 2, message: "Give medication", time: "9:00 AM", date: dateArray[3], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
-        33: { id: 33, petId: 2, message: "Playtime", time: "10:30 AM", date: dateArray[4], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
-        34: { id: 34, petId: 2, message: "Feed dinner", time: "12:00 PM", date: dateArray[5], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
-        35: { id: 35, petId: 2, message: "Brush fur", time: "1:30 PM", date: dateArray[6], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
-        36: { id: 36, petId: 3, message: "Bedtime treat", time: "3:00 PM", date: dateArray[0], petImg: require('../assets/icons/Profile/Ferret.jpeg'), alarm : false, completed : false  },
-        37: { id: 37, petId: 3, message: "Morning exercise", time: "4:30 PM", date: dateArray[1], petImg: require('../assets/icons/Profile/Ferret.jpeg'), alarm : false, completed : false  },
-        38: { id: 38, petId: 3, message: "Check water bowl", time: "6:00 PM", date: dateArray[2], petImg: require('../assets/icons/Profile/Ferret.jpeg'), alarm : false, completed : false  },
-        39: { id: 39, petId: 3, message: "Sunbathing time", time: "7:30 PM", date: dateArray[3], petImg: require('../assets/icons/Profile/Ferret.jpeg'), alarm : false, completed : false  },
-        40: { id: 40, petId: 3, message: "Training session", time: "9:00 PM", date: dateArray[4], petImg: require('../assets/icons/Profile/Ferret.jpeg'), alarm : false, completed : false  },
-        41: { id: 41, petId: 3, message: "Hide treats for fun", time: "10:30 PM", date: dateArray[5], petImg: require('../assets/icons/Profile/Ferret.jpeg'), alarm : false, completed : false  },
-        42: { id: 42, petId: 3, message: "Evening stroll", time: "12:00 AM", date: dateArray[6], petImg: require('../assets/icons/Profile/Ferret.jpeg'), alarm : false, completed : false  },
-        43: { id: 43, petId: 1, message: "Play with toys", time: "1:30 AM", date: dateArray[0], petImg: require('../assets/icons/Profile/PetProfile.png'), alarm : false, completed : false  },
-        44: { id: 44, petId: 2, message: "Bathroom Break", time: "3:00 AM", date: dateArray[1], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
-        45: { id: 45, petId: 3, message: "Take a walk", time: "4:30 AM", date: dateArray[2], petImg: require('../assets/icons/Profile/Ferret.jpeg'), alarm : false, completed : false  },
-        46: { id: 46, petId: 1, message: "Give medication", time: "6:00 AM", date: dateArray[3], petImg: require('../assets/icons/Profile/PetProfile.png'), alarm : false, completed : false  },
-        47: { id: 47, petId: 2, message: "Playtime", time: "7:30 AM", date: dateArray[4], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
-        48: { id: 48, petId: 3, message: "Feed dinner", time: "9:00 AM", date: dateArray[5], petImg: require('../assets/icons/Profile/Ferret.jpeg'), alarm : false, completed : false  },
-        49: { id: 49, petId: 1, message: "Brush fur", time: "10:30 AM", date: dateArray[6], petImg: require('../assets/icons/Profile/PetProfile.png'), alarm : false, completed : false  },
-        50: { id: 50, petId: 2, message: "Bedtime treat", time: "12:00 PM", date: dateArray[0], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
+        // 26: { id: 26, petId: 1, message: "Training session", time: "12:00 AM", date: dateArray[4], petImg: require('../assets/icons/Profile/PetProfile.png'), alarm : false, completed : false  },
+        // 27: { id: 27, petId: 1, message: "Hide treats for fun", time: "1:30 AM", date: dateArray[5], petImg: require('../assets/icons/Profile/PetProfile.png'), alarm : false, completed : false  },
+        // 28: { id: 28, petId: 1, message: "Evening stroll", time: "3:00 AM", date: dateArray[6], petImg: require('../assets/icons/Profile/PetProfile.png'), alarm : false, completed : false  },
+        // 29: { id: 29, petId: 2, message: "Play with toys", time: "4:30 AM", date: dateArray[0], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
+        // 30: { id: 30, petId: 2, message: "Bathroom Break", time: "6:00 AM", date: dateArray[1], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
+        // 31: { id: 31, petId: 2, message: "Take a walk", time: "7:30 AM", date: dateArray[2], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
+        // 32: { id: 32, petId: 2, message: "Give medication", time: "9:00 AM", date: dateArray[3], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
+        // 33: { id: 33, petId: 2, message: "Playtime", time: "10:30 AM", date: dateArray[4], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
+        // 34: { id: 34, petId: 2, message: "Feed dinner", time: "12:00 PM", date: dateArray[5], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
+        // 35: { id: 35, petId: 2, message: "Brush fur", time: "1:30 PM", date: dateArray[6], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
+        // 36: { id: 36, petId: 3, message: "Bedtime treat", time: "3:00 PM", date: dateArray[0], petImg: require('../assets/icons/Profile/Ferret.jpeg'), alarm : false, completed : false  },
+        // 37: { id: 37, petId: 3, message: "Morning exercise", time: "4:30 PM", date: dateArray[1], petImg: require('../assets/icons/Profile/Ferret.jpeg'), alarm : false, completed : false  },
+        // 38: { id: 38, petId: 3, message: "Check water bowl", time: "6:00 PM", date: dateArray[2], petImg: require('../assets/icons/Profile/Ferret.jpeg'), alarm : false, completed : false  },
+        // 39: { id: 39, petId: 3, message: "Sunbathing time", time: "7:30 PM", date: dateArray[3], petImg: require('../assets/icons/Profile/Ferret.jpeg'), alarm : false, completed : false  },
+        // 40: { id: 40, petId: 3, message: "Training session", time: "9:00 PM", date: dateArray[4], petImg: require('../assets/icons/Profile/Ferret.jpeg'), alarm : false, completed : false  },
+        // 41: { id: 41, petId: 3, message: "Hide treats for fun", time: "10:30 PM", date: dateArray[5], petImg: require('../assets/icons/Profile/Ferret.jpeg'), alarm : false, completed : false  },
+        // 42: { id: 42, petId: 3, message: "Evening stroll", time: "12:00 AM", date: dateArray[6], petImg: require('../assets/icons/Profile/Ferret.jpeg'), alarm : false, completed : false  },
+        // 43: { id: 43, petId: 1, message: "Play with toys", time: "1:30 AM", date: dateArray[0], petImg: require('../assets/icons/Profile/PetProfile.png'), alarm : false, completed : false  },
+        // 44: { id: 44, petId: 2, message: "Bathroom Break", time: "3:00 AM", date: dateArray[1], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
+        // 45: { id: 45, petId: 3, message: "Take a walk", time: "4:30 AM", date: dateArray[2], petImg: require('../assets/icons/Profile/Ferret.jpeg'), alarm : false, completed : false  },
+        // 46: { id: 46, petId: 1, message: "Give medication", time: "6:00 AM", date: dateArray[3], petImg: require('../assets/icons/Profile/PetProfile.png'), alarm : false, completed : false  },
+        // 47: { id: 47, petId: 2, message: "Playtime", time: "7:30 AM", date: dateArray[4], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
+        // 48: { id: 48, petId: 3, message: "Feed dinner", time: "9:00 AM", date: dateArray[5], petImg: require('../assets/icons/Profile/Ferret.jpeg'), alarm : false, completed : false  },
+        // 49: { id: 49, petId: 1, message: "Brush fur", time: "10:30 AM", date: dateArray[6], petImg: require('../assets/icons/Profile/PetProfile.png'), alarm : false, completed : false  },
+        // 50: { id: 50, petId: 2, message: "Bedtime treat", time: "12:00 PM", date: dateArray[0], petImg: require('../assets/icons/Profile/PetProfileDog.png'), alarm : false, completed : false  },
       },
     },
   });
+
+
 
 const updateAlarm = (alarm) => {
   setDatabase((prevDatabase) => {
@@ -137,36 +139,76 @@ const updateCompleted = (day, pet) => {
 }
 
 
-   const addReminder = (petId, message, time) => {
-     const newReminderId = Object.keys(database.FakeUser.reminders).length + 1;
-     const newReminder = { petId, message, time };
-     setDatabase((prevDatabase) => ({
-       ...prevDatabase,
-       FakeUser: {
-         ...prevDatabase.FakeUser,
-         reminders: {
-           ...prevDatabase.FakeUser.reminders,
-           [newReminderId]: newReminder,
-         },
-       },
-     }));
-   };
+   const addReminder = (petId, message, time, currentDate) => {
+  setDatabase((prevDatabase) => {
+    const newReminderId = Object.keys(prevDatabase.FakeUser.reminders).length + 1;
+    const findPetImg = Object.values(database.FakeUser.pets).filter(pet => pet.id === Number(petId))
+    const newReminder = {
+      id: newReminderId,
+      petId,
+      message,
+      time,
+      date: currentDate,
+      petImg: findPetImg[0].petImg,
+      alarm: false,
+      completed: false,
+    };
+    return {
+      ...prevDatabase,
+      FakeUser: {
+        ...prevDatabase.FakeUser,
+        reminders: {
+          ...prevDatabase.FakeUser.reminders,
+          [newReminderId]: newReminder,
+        },
+      },
+    };
+  });
+};
 
-   const updateReminder = (reminderId, message, time) => {
-     setDatabase((prevDatabase) => ({
-       ...prevDatabase,
-       FakeUser: {
-         ...prevDatabase.FakeUser,
-         reminders: {
-           ...prevDatabase.FakeUser.reminders,
-           [reminderId]: {
-             ...prevDatabase.FakeUser.reminders[reminderId],
-             message,
-             time,
-           },
+const completeReminder = (reminderId) => {
+  setDatabase((prevDatabase) => {
+    const updatedReminders = {
+      ...prevDatabase.FakeUser.reminders,
+      [reminderId]: {
+        ...prevDatabase.FakeUser.reminders[reminderId],
+        completed: true,
+      },
+    };
+
+    return {
+      ...prevDatabase,
+      FakeUser: {
+        ...prevDatabase.FakeUser,
+        reminders: updatedReminders,
+      },
+    };
+  });
+};
+
+   const updateReminder = ({reminderId, message, time, petImg, currentDate}) => {
+     setDatabase((prevDatabase) => {
+       const updatedReminders = {
+         ...prevDatabase.FakeUser.reminders,
+         [reminderId]: {
+           ...prevDatabase.FakeUser.reminders[reminderId],
+           message,
+           time,
+           date: currentDate,
+           petImg,
+           alarm: false,
+           completed: false,
          },
-       },
-     }));
+       };
+
+       return {
+         ...prevDatabase,
+         FakeUser: {
+           ...prevDatabase.FakeUser,
+           reminders: updatedReminders,
+         },
+       };
+     });
    };
 
    const deleteReminder = (reminderId) => {
@@ -189,7 +231,8 @@ const updateCompleted = (day, pet) => {
      updateReminder,
      deleteReminder,
     updateAlarm,
-    updateCompleted
+    updateCompleted,
+    completeReminder
    };
 
 

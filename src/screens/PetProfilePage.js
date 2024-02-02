@@ -4,7 +4,7 @@ import { useFakeDatabase } from "../../context/FakeDataBase";
 
 import background from "../../assets/background.png";
 import left from "../../assets/icons/misc/left.png"
-import ProfileAvatar from '../../assets/icons/Profile/ProfileAvatar.png'
+
 
 import VetInfo from '../../assets/icons/misc/vetinfo.png'
 import orange from "../../assets/icons/misc/orange.png";
@@ -17,7 +17,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 
 function PetProfilePage({navigation, route}) {
-  const { database, addReminder, updateReminder, deleteReminder } =
+  const { database } =
     useFakeDatabase();
 
 const { pet } = route?.params ?? { pet: Object.values(database.FakeUser.pets)[0] };
@@ -68,7 +68,7 @@ const currentDate = new Date().toLocaleDateString("en-US", {
             <Image style={styles.left_button} source={left} />
           </TouchableOpacity>
           <Text style={styles.petprofile_text}>Pet Profile</Text>
-          <Image source={ProfileAvatar}></Image>
+          <Image source={database.FakeUser.userinfo.profileImg}></Image>
         </View>
 
         <Image style={styles.petprofile_img} source={pet?.petImg}></Image>

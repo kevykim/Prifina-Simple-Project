@@ -1,15 +1,13 @@
 import {View, ScrollView, Text, ImageBackground, StyleSheet, Image, TouchableOpacity, Switch, Pressable} from 'react-native'
 import { useCustomFonts } from "../utils/CustomFonts";
-import { useState } from 'react';
 
 import background from '../../assets/background.png'
-import dog from '../../assets/icons/Pets/dog.jpg'
 import Carousel from "pinar";
 
 import { useFakeDatabase } from '../../context/FakeDataBase';
 
 function HomePage ({ navigation}) {
-    const { database, updateAlarm, addReminder, updateReminder, deleteReminder } =
+    const { database, updateAlarm } =
       useFakeDatabase();
 
     const allPets = Object.values(database.FakeUser.pets)

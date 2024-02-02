@@ -1,60 +1,123 @@
 import {Text, View, StyleSheet, ScrollView, TextInput, ImageBackground, Image, TouchableOpacity, Alert} from 'react-native';
+import RNPickerSelect from "react-native-picker-select";
+
 import { useCustomFonts } from '../utils/CustomFonts';
 
 import { Calendar, LocaleConfig } from "react-native-calendars";
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
+import EditModal from '../components/Modal';
 
 import background from "../../assets/background.png";
-import ProfileAvatar from '../../assets/icons/Profile/ProfileAvatar.png'
-import dog from '../../assets/icons/Pets/dog.jpg'
 import { FontAwesome } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
+import { useFakeDatabase } from '../../context/FakeDataBase';
 
 import Swipeable from "react-native-gesture-handler/Swipeable";
-import complete from '../../assets/icons/reminder_icons/complete.png'
-import edit from '../../assets/icons/reminder_icons/edit.png'
+import complete from '../../assets/icons/reminder_icons/complete.png';
+import edit from '../../assets/icons/reminder_icons/edit.png';
+import deleteicon from '../../assets/icons/reminder_icons/delete.png';
 
 function Reminders () {
+    const { database, addReminder, updateReminder, deleteReminder, completeReminder } =
+      useFakeDatabase();
 
-  const todayDate = new Date().toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
+      const swipeableRefs = useRef(null);
 
-    const fontsLoaded = useCustomFonts();
-    const [selected, setSelected] = useState("");
-    const [date, setDate] = useState(todayDate)
+      
+      const todayDate = new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+      
+      const reminderDate = new Date().toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+      });
+      
+      const fontsLoaded = useCustomFonts();
+      const [selected, setSelected] = useState("");
+      const [date, setDate] = useState(todayDate)
+      const [currentDate, setCurrentDate] = useState(reminderDate)
+      
+      
+      const currentReminders = Object.values(database.FakeUser.reminders).filter(reminder => reminder.date === currentDate && reminder.completed === false)
+      const [petId, setPetId] = useState('')
+      const [message, setMessage] = useState('')
+      const [time, setTime] = useState('')
+      
+      const [reminderInput, setReminderInput] = useState(false)
+
+      const [showModal, setShowModal] = useState(false)
+
+      const [reminderId, setReminderId] = useState()
+
 
     if (!fontsLoaded) {
         return null;
     }
+
+     const closeSwipeable = (id) => {
+       if (swipeableRefs[id]) {
+         swipeableRefs[id].close();
+       }
+     };
     
-    const onPress = () => {
+    const showReminder = () => {
+      setReminderInput(!reminderInput)
+    }
+
+    const addingReminder = () => {
+      addReminder(petId, message, time, currentDate )
+    }
+
+    
+    const openModal = (reminder) => {
+      setReminderId(reminder)
+       setShowModal(!showModal)
 
     }
 
-      const renderRightActions = () => {
+    const completeAReminder = (reminderId) => {
+      completeReminder(reminderId)
+    }
 
-        return (
-         <View style={styles.swipe_container}>
-          <TouchableOpacity onPress={() => Alert.alert('Edit')}>
-            <Image style={styles.orange_button} source={edit}/>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => Alert.alert('Complete')}>
-            <Image style={styles.green_button} source={complete}/>
-          </TouchableOpacity>
+    const deleteAReminder = (reminderId) => {
+      deleteReminder(reminderId)
+    };
 
-         </View>
-        );
-      };
+      // const renderRightActions = () => {
+
+      //   return (
+      //    <View style={styles.swipe_container}>
+      //     <TouchableOpacity onPress={editReminder}>
+      //       <Image style={styles.orange_button} source={edit}/>
+      //     </TouchableOpacity>
+      //     <TouchableOpacity onPress={completeReminder}>
+      //       <Image style={styles.green_button} source={complete}/>
+      //     </TouchableOpacity>
+
+      //    </View>
+      //   );
+      // };
+      // const renderLeftActions = () => {
+      //   return (
+      //     <View style={styles.swipe_container_l}>
+      //       <TouchableOpacity onPress={() => deleteAReminder}>
+      //         <Image style={styles.red_button} source={deleteicon} />
+      //       </TouchableOpacity>
+      //     </View>
+      //   );
+      // };
 
     return (
       <ScrollView contentContainerStyle={styles.main}>
         <ImageBackground source={background} style={styles.img_style}>
           <View style={styles.header_container}>
             <Text style={styles.header}>Reminders</Text>
-            <Image source={ProfileAvatar}></Image>
+            <Image source={database.FakeUser.userinfo.profileImg}></Image>
           </View>
 
           <Calendar
@@ -81,13 +144,33 @@ function Reminders () {
             }}
             onDayPress={(day) => {
               setSelected(day.dateString);
-              setDate(
-                new Date(day.dateString).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })
-              );
+
+              const month = day.month;
+              const today = day.day;
+              const year = day.year;
+
+              const currentDate = `${month}/${today}/${year}`;
+
+              const months = [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December",
+              ];
+
+              let monthName = months[month - 1];
+
+              setDate(`${monthName} ${today}, ${year}`);
+
+              setCurrentDate(currentDate);
             }}
             markedDates={{
               [selected]: {
@@ -104,37 +187,139 @@ function Reminders () {
                 {date}
               </Text>
             </View>
-            <TouchableOpacity onPress={onPress}>
-              <Text style={{ fontFamily: "Lato-Reg" }}>Edit</Text>
+            <TouchableOpacity onPress={showReminder}>
+              <Entypo name="plus" size={20} color="#F7945E" />
             </TouchableOpacity>
           </View>
-          <TextInput placeholder="Add reminder"></TextInput>
+
+          {reminderInput && (
+            <View style={styles.reminder_outer}>
+              <View style={styles.reminder_container}>
+                <RNPickerSelect
+                  onValueChange={(value) => setPetId(value)}
+                  items={[
+                    { label: "Coco", value: "1" },
+                    { label: "Buddy", value: "2" },
+                    { label: "Noodle", value: "3" },
+                  ]}
+                />
+                <TextInput
+                  value={message}
+                  onChangeText={(m) => setMessage(m)}
+                  placeholder="HI"
+                ></TextInput>
+                <TextInput
+                  value={time}
+                  onChangeText={(t) => setTime(t)}
+                  placeholder="time"
+                ></TextInput>
+              </View>
+              <TouchableOpacity onPress={addingReminder}>
+                <Text>OKAY</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
+          {/* {updateInput && (
+            <View style={styles.reminder_outer}>
+              <View style={styles.reminder_container}>
+                <Image
+                  style={styles.pet_image}
+                  source={}
+                ></Image>
+                <TextInput
+                  value={updatedMessage}
+                  onChangeText={(m) => setUpdatedMessage(m)}
+                ></TextInput>
+                <TextInput
+                  value={updatedTime}
+                  onChangeText={(t) => setUpdatedTime(t)}
+                ></TextInput>
+              </View>
+              <TouchableOpacity onPress={() => editReminder()}>
+                <Text>OKAY</Text>
+              </TouchableOpacity>
+            </View>
+          )} */}
 
           {/* MAP OUT ALL REMINDERS WITH VIEW */}
-          <View style={styles.reminder_outer}>
-            <View style={styles.reminder_container}>
-              <Swipeable renderRightActions={renderRightActions}>
-                <View style={styles.swipe_box}>
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Image style={styles.pet_image} source={dog}></Image>
-                    <Text style={{ fontFamily: "Lato-Reg", marginLeft: 10 }}>
-                      {" "}
-                      Reminders here
+          {currentReminders.map((reminder) => (
+            <View key={reminder.id} style={styles.reminder_outer}>
+              <View style={styles.reminder_container}>
+                <Swipeable
+                  ref={(ref) => (swipeableRefs[reminder.id] = ref)}
+                  renderLeftActions={() => {
+                    return (
+                      <View style={styles.swipe_container_l}>
+                        <TouchableOpacity
+                          onPress={() => deleteAReminder(reminder.id)}
+                        >
+                          <Image
+                            style={styles.red_button}
+                            source={deleteicon}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    );
+                  }}
+                  renderRightActions={() => {
+                    return (
+                      <View style={styles.swipe_container}>
+                        <TouchableOpacity
+                          onPress={() => openModal(reminder.id)}
+                        >
+                          <Image style={styles.orange_button} source={edit} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => completeAReminder(reminder.id)}
+                        >
+                          <Image
+                            style={styles.green_button}
+                            source={complete}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    );
+                  }}
+                >
+                  <View style={styles.swipe_box}>
+                    <View
+                      style={{ flexDirection: "row", alignItems: "center" }}
+                    >
+                      <Image
+                        style={styles.pet_image}
+                        source={reminder.petImg}
+                      ></Image>
+                      <Text style={{ fontFamily: "Lato-Reg", marginLeft: 10 }}>
+                        {" "}
+                        {reminder.message}
+                      </Text>
+                    </View>
+                    <Text
+                      style={{
+                        fontFamily: "Lato-Reg",
+                        color: "#F7945E",
+                        marginRight: 25,
+                      }}
+                    >
+                      {reminder.time}
                     </Text>
                   </View>
-                  <Text
-                    style={{
-                      fontFamily: "Lato-Reg",
-                      color: "#F7945E",
-                      marginRight: 25,
-                    }}
-                  >
-                    2:39PM
-                  </Text>
-                </View>
-              </Swipeable>
+                </Swipeable>
+              </View>
             </View>
-          </View>
+          ))}
+
+          {showModal && (
+            <EditModal
+              modalShown={showModal}
+              closeModal={() => setShowModal(false)}
+              reminderId={reminderId}
+              closeSwipeable={closeSwipeable}
+            />
+          )}
+
+          <View style={{ marginBottom: 100 }}></View>
         </ImageBackground>
       </ScrollView>
     );
@@ -205,7 +390,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: -1, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 7,
-    marginBottom: 100,
   },
   reminder_container: {
     padding: 10,
@@ -240,6 +424,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: 85,
   },
+  swipe_container_l: {
+    width: 24,
+  },
 
   orange_button: {
     height: 40,
@@ -250,6 +437,12 @@ const styles = StyleSheet.create({
     width: 40,
     borderTopRightRadius: 15,
     borderBottomRightRadius: 15,
+  },
+  red_button: {
+    height: 40,
+    width: 40,
+    borderTopLeftRadius: 15,
+    borderBottomLeftRadius: 15
   },
 });
 
