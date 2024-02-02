@@ -12,7 +12,7 @@ import { useState, useRef } from "react";
 
 
 const AddReminderModal = ({modalShown, closeModal}) => {
-    const { database, addReminder, deleteReminder, completeReminder } =
+    const { database, addReminder } =
       useFakeDatabase();
 
     const fontsLoaded = useCustomFonts();
@@ -135,9 +135,9 @@ const AddReminderModal = ({modalShown, closeModal}) => {
                   <View
                     style={{
                       flexDirection: "row",
-                      width: 130,
+                      width: 160,
                       justifyContent: "space-between",
-                      marginLeft: 150,
+                      marginLeft: 120,
                     }}
                   >
                     <TouchableOpacity
@@ -150,7 +150,7 @@ const AddReminderModal = ({modalShown, closeModal}) => {
                       style={styles.submit_button}
                       onPress={addingReminder}
                     >
-                      <Text style={styles.submit_buttontext}>Add</Text>
+                      <Text style={styles.submit_buttontext}>Confirm</Text>
                     </TouchableOpacity>
                   </View>
                 </View>

@@ -6,7 +6,8 @@ import { useCustomFonts } from '../utils/CustomFonts';
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { useState, useRef } from 'react';
 
-import EditModal from '../components/Modal';
+import EditReminderModal from '../components/EditReminderModal';
+import AddReminderModal from '../components/AddReminderModal';
 
 import background from "../../assets/background.png";
 import { FontAwesome } from "@expo/vector-icons";
@@ -17,9 +18,10 @@ import Swipeable from "react-native-gesture-handler/Swipeable";
 import complete from '../../assets/icons/reminder_icons/complete.png';
 import edit from '../../assets/icons/reminder_icons/edit.png';
 import deleteicon from '../../assets/icons/reminder_icons/delete.png';
+import DeleteReminderModal from '../components/DeleteReminderModal';
 
 function Reminders () {
-    const { database, addReminder, updateReminder, deleteReminder, completeReminder } =
+    const { database, completeReminder } =
       useFakeDatabase();
 
       const swipeableRefs = useRef(null);
@@ -44,13 +46,13 @@ function Reminders () {
       
       
       const currentReminders = Object.values(database.FakeUser.reminders).filter(reminder => reminder.date === currentDate && reminder.completed === false)
-      const [petId, setPetId] = useState('')
-      const [message, setMessage] = useState('')
-      const [time, setTime] = useState('')
       
-      const [reminderInput, setReminderInput] = useState(false)
+      
+      // const [reminderInput, setReminderInput] = useState(false)
 
-      const [showModal, setShowModal] = useState(false)
+      const [showEditRModal, setShowEditRModal] = useState(false)
+      const [showAddRModal, setShowAddRModal] = useState(false)
+      const [showDeleteRModal, setShowDeleteRModal] = useState(false)
 
       const [reminderId, setReminderId] = useState()
 
@@ -65,28 +67,36 @@ function Reminders () {
        }
      };
     
-    const showReminder = () => {
-      setReminderInput(!reminderInput)
-    }
+    // const showReminder = () => {
+    //   setReminderInput(!reminderInput)
+    // }
 
-    const addingReminder = () => {
-      addReminder(petId, message, time, currentDate )
-    }
+    // const addingReminder = () => {
+    //   addReminder(petId, message, time, currentDate )
+    // }
 
     
-    const openModal = (reminder) => {
+    const openEditRModal = (reminder) => {
       setReminderId(reminder)
-       setShowModal(!showModal)
+       setShowEditRModal(!showEditRModal)
+    }
 
+    const openAddRModal = () => {
+      setShowAddRModal(!showAddRModal)
+    }
+
+    const openDeleteRModal = (reminder) => {
+      setReminderId(reminder);
+      setShowDeleteRModal(!showDeleteRModal)
     }
 
     const completeAReminder = (reminderId) => {
       completeReminder(reminderId)
     }
 
-    const deleteAReminder = (reminderId) => {
-      deleteReminder(reminderId)
-    };
+    // const deleteAReminder = (reminderId) => {
+    //   deleteReminder(reminderId)
+    // };
 
       // const renderRightActions = () => {
 
@@ -187,12 +197,19 @@ function Reminders () {
                 {date}
               </Text>
             </View>
-            <TouchableOpacity onPress={showReminder}>
+            <TouchableOpacity onPress={() => openAddRModal()}>
               <Entypo name="plus" size={20} color="#F7945E" />
             </TouchableOpacity>
           </View>
 
-          {reminderInput && (
+          {showAddRModal && (
+            <AddReminderModal
+              modalShown={showAddRModal}
+              closeModal={() => setShowAddRModal(false)}
+            />
+          )}
+
+          {/* {reminderInput && (
             <View style={styles.reminder_outer}>
               <View style={styles.reminder_container}>
                 <RNPickerSelect
@@ -218,7 +235,7 @@ function Reminders () {
                 <Text>OKAY</Text>
               </TouchableOpacity>
             </View>
-          )}
+          )} */}
 
           {/* {updateInput && (
             <View style={styles.reminder_outer}>
@@ -252,7 +269,7 @@ function Reminders () {
                     return (
                       <View style={styles.swipe_container_l}>
                         <TouchableOpacity
-                          onPress={() => deleteAReminder(reminder.id)}
+                          onPress={() => openDeleteRModal(reminder.id)}
                         >
                           <Image
                             style={styles.red_button}
@@ -266,7 +283,7 @@ function Reminders () {
                     return (
                       <View style={styles.swipe_container}>
                         <TouchableOpacity
-                          onPress={() => openModal(reminder.id)}
+                          onPress={() => openEditRModal(reminder.id)}
                         >
                           <Image style={styles.orange_button} source={edit} />
                         </TouchableOpacity>
@@ -310,12 +327,20 @@ function Reminders () {
             </View>
           ))}
 
-          {showModal && (
-            <EditModal
-              modalShown={showModal}
-              closeModal={() => setShowModal(false)}
+          {showEditRModal && (
+            <EditReminderModal
+              modalShown={showEditRModal}
+              closeModal={() => setShowEditRModal(false)}
               reminderId={reminderId}
               closeSwipeable={closeSwipeable}
+            />
+          )}
+
+          {showDeleteRModal && (
+            <DeleteReminderModal 
+              modalShown={showDeleteRModal}
+              closeModal={() => setShowDeleteRModal(false)}
+              reminderId={reminderId}
             />
           )}
 
@@ -413,6 +438,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 6,
+    zIndex: 1,
   },
   swipe_box: {
     flexDirection: "row",
@@ -425,7 +451,8 @@ const styles = StyleSheet.create({
     width: 85,
   },
   swipe_container_l: {
-    width: 24,
+    width: 38,
+    zIndex: 2
   },
 
   orange_button: {
