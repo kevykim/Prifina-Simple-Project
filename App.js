@@ -10,6 +10,7 @@ import LoginPage from './src/screens/LoginPage';
 import background from './assets/background.png'
 import NavigationBar from './src/components/NavigationBar';
 import SignUpPage from './src/screens/SignUpPage';
+import { FakeDatabaseProvider } from './context/FakeDataBase';
 
 export default function App() {
   
@@ -23,6 +24,7 @@ export default function App() {
   }
 
   return (
+    <FakeDatabaseProvider>
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaProvider>
         <NavigationContainer>
@@ -46,6 +48,7 @@ export default function App() {
         </NavigationContainer>
       </SafeAreaProvider>
     </GestureHandlerRootView>
+    </FakeDatabaseProvider>
   );
 }
 
