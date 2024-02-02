@@ -139,16 +139,16 @@ const updateCompleted = (day, pet) => {
 }
 
 
-   const addReminder = (petId, message, time, currentDate) => {
+   const addReminder = ({petId, message, time, date}) => {
   setDatabase((prevDatabase) => {
     const newReminderId = Object.keys(prevDatabase.FakeUser.reminders).length + 1;
     const findPetImg = Object.values(database.FakeUser.pets).filter(pet => pet.id === Number(petId))
     const newReminder = {
       id: newReminderId,
-      petId,
+      petId : Number(petId),
       message,
       time,
-      date: currentDate,
+      date,
       petImg: findPetImg[0].petImg,
       alarm: false,
       completed: false,
@@ -186,7 +186,7 @@ const completeReminder = (reminderId) => {
   });
 };
 
-   const updateReminder = ({reminderId, message, time, petImg, currentDate}) => {
+   const updateReminder = ({reminderId, message, time, petImg, date}) => {
      setDatabase((prevDatabase) => {
        const updatedReminders = {
          ...prevDatabase.FakeUser.reminders,
@@ -194,7 +194,7 @@ const completeReminder = (reminderId) => {
            ...prevDatabase.FakeUser.reminders[reminderId],
            message,
            time,
-           date: currentDate,
+           date,
            petImg,
            alarm: false,
            completed: false,

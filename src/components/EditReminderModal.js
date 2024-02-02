@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, View, Text, TouchableOpacity, StyleSheet, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, Pressable } from "react-native";
-import RNPickerSelect from "react-native-picker-select";
+
 const moment = require("moment");
 
 
@@ -11,7 +11,7 @@ import { useCustomFonts } from "../utils/CustomFonts";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 
-const EditModal = ({ modalShown, closeModal, reminderId, closeSwipeable }) => {
+const EditReminderModal = ({ modalShown, closeModal, reminderId, closeSwipeable }) => {
   const fontsLoaded = useCustomFonts();
   const secondInputRef = useRef(null);
 
@@ -38,25 +38,28 @@ const EditModal = ({ modalShown, closeModal, reminderId, closeSwipeable }) => {
 
   const [updatedMessage, setUpdatedMessage] = useState(findReminder.message);
   const [updatedTime, setUpdatedTime] = useState(combinedDT);
-
-  const [showTPicker, setShowTPicker] = useState(false);
-
-  const toggleTimePicker = () => {
-    setShowTPicker(!showTPicker);
-  };
+  const [updatedDate, setUpdatedDate] = useState(moment(currentDate, "M/D/YYYY").toDate());
 
 
-  const onChange = (event, selectedDate) => {
+
+
+  const onTimeChange = (event, selectedDate) => {
     if (event.type === "set") {
-      const currentDate = selectedDate || date;
+      const currentDate = selectedDate || currentTime;
 
         // toggleTimePicker();
       setUpdatedTime(currentDate);
 
-    } else {
-      toggleTimePicker();
-    }
+    } 
   };
+
+  const onDateChange = (event, selectedDate) => {
+    if (event.type === 'set') {
+        const thisDate = selectedDate 
+
+        setUpdatedDate(thisDate)
+    }
+  }
 
   const updatingReminders = () => {
       const dateObject = new Date(updatedTime);
@@ -67,13 +70,23 @@ const EditModal = ({ modalShown, closeModal, reminderId, closeSwipeable }) => {
       hour12: true,
     });
 
+    
+    const newDateObject = new Date(updatedDate);
+
+    const updatingDate = newDateObject.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+    });
+
 
 
     updateReminder({reminderId,
       message: updatedMessage,
       time: updatingTime,
       petImg : findReminder.petImg,
-      currentDate : findReminder.date});
+      date: updatingDate
+    });
     closeModal();
     closeSwipeable(reminderId);
   };
@@ -84,7 +97,6 @@ const EditModal = ({ modalShown, closeModal, reminderId, closeSwipeable }) => {
         <View style={styles.modal_outer}>
           <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={styles.l_keyboardAvoidingView}
           >
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               <View style={styles.modal_inner}>
@@ -101,7 +113,6 @@ const EditModal = ({ modalShown, closeModal, reminderId, closeSwipeable }) => {
                   onChangeText={(m) => setUpdatedMessage(m)}
                 />
 
-                {showTPicker && (
                   <View style={styles.modal_picker_input}>
                     <DateTimePicker
                       value={updatedTime}
@@ -112,21 +123,26 @@ const EditModal = ({ modalShown, closeModal, reminderId, closeSwipeable }) => {
                         width: 280,
                         height: 100,
                       }}
-                      onChange={onChange}
+                      onChange={onTimeChange}
                     />
                   </View>
-                )}
 
-                {!showTPicker && (
-                  <Pressable onPress={toggleTimePicker}>
-                    <TextInput
-                      style={styles.modal_input}
-                      editable={false}
-                      onPressIn={toggleTimePicker}
-                      placeholder="time"
+                  <View style={styles.modal_picker_input}>
+                    <DateTimePicker
+                      value={updatedDate}
+                      mode={"date"}
+                      display="spinner"
+                      style={{
+                        // backgroundColor: "#fcf0e8",
+                        width: 280,
+                        height: 100,
+                      }}
+                      onChange={onDateChange}
                     />
-                  </Pressable>
-                )}
+                  </View>
+
+
+
                 <View
                   style={{
                     flexDirection: "row",
@@ -166,7 +182,7 @@ const styles = StyleSheet.create({
   },
   modal_outer: {
     backgroundColor: "white",
-    height: 260,
+    height: 380,
     width: 326,
     justifyContent: "center",
     alignItems: "center",
@@ -181,7 +197,7 @@ const styles = StyleSheet.create({
   modal_inner: {
     padding: 10,
     width: 316,
-    height: 250,
+    height: 370,
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
@@ -199,26 +215,26 @@ const styles = StyleSheet.create({
     width: 288,
     height: 45,
     borderRadius: 25,
-    marginBottom: 5,
     padding: 15,
     paddingLeft: 20,
     shadowColor: "black",
     shadowOffset: { width: -1, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
-    fontFamily: "Lato-Light",
+    fontFamily: "Lato-Reg",
   },
   modal_picker_input: {
     backgroundColor: "white",
     width: 288,
-    justifyContent:'center',
-    alignItems:'center',
+    justifyContent: "center",
+    alignItems: "center",
     height: 45,
     borderRadius: 25,
     shadowColor: "black",
     shadowOffset: { width: -1, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
+    fontFamily: "Lato-Light",
   },
   submit_button: {
     marginTop: 10,
@@ -255,4 +271,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EditModal;
+export default EditReminderModal;
