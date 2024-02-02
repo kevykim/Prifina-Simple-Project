@@ -10,11 +10,11 @@
   },
   "dependencies": {
     "@expo/metro-runtime": "~3.1.1",
-    "@react-native-community/datetimepicker": "^7.6.2",
+    "@react-native-community/datetimepicker": "7.6.1",
     "@react-native-picker/picker": "2.6.1",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/stack": "^6.3.20",
-    "expo": "~50.0.4",
+    "expo": "~50.0.5",
     "expo-checkbox": "~2.7.0",
     "expo-font": "~11.10.2",
     "expo-status-bar": "~1.11.1",
