@@ -37,7 +37,7 @@ export const FakeDatabaseProvider = ({ children }) => {
 
       pets: {
         1: { id: 1, name: "Coco", age : 3, breed : 'Siamese Cat', petImg: require('../assets/icons/Profile/PetProfile.png'), vet: 'Perfect Care Vet Center', street: '123 PetCare Lane', city: 'Northland', state: 'ES 12345', },
-        2: { id: 2, name: "Buddy", age : 2, breed: 'Gold Retriever', petImg: require('../assets/icons/Profile/PetProfileDog.png'), vet: 'Comfort Critters Hospital', street: '456 VetStreet Ave', city: 'DreamLand', state: 'ML 67890'  },
+        2: { id: 2, name: "Buddy", age : 2, breed: 'Golden Retriever', petImg: require('../assets/icons/Profile/PetProfileDog.png'), vet: 'Comfort Critters Hospital', street: '456 VetStreet Ave', city: 'DreamLand', state: 'ML 67890'  },
         3: { id: 3, name: "Noodle", age : 2, breed: 'Ferret', petImg: require('../assets/icons/Profile/Ferret.jpeg'), vet: 'Healing Paws Clinic', street: '789 PawPlace Road', city: 'Enchanted Isle', state: 'ST 98765' },
       },
 

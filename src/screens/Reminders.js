@@ -307,7 +307,11 @@ function Reminders () {
                         style={styles.pet_image}
                         source={reminder.petImg}
                       ></Image>
-                      <Text style={{ fontFamily: "Lato-Reg", marginLeft: 10 }}>
+                      <Text
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                        style={{ fontFamily: "Lato-Reg", marginLeft: 10, maxWidth: 250 }}
+                      >
                         {" "}
                         {reminder.message}
                       </Text>
@@ -337,7 +341,7 @@ function Reminders () {
           )}
 
           {showDeleteRModal && (
-            <DeleteReminderModal 
+            <DeleteReminderModal
               modalShown={showDeleteRModal}
               closeModal={() => setShowDeleteRModal(false)}
               reminderId={reminderId}

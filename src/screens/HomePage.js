@@ -69,13 +69,19 @@ function HomePage ({ navigation}) {
                       <Text style={styles.card_text}>
                         {"Age:"} {pet.age} {"years"}
                       </Text>
-                      <Text style={styles.card_text}>
+                      <Text
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                        style={styles.card_text}
+                      >
                         {"Breed:"} {pet.breed}
                       </Text>
                     </View>
 
                     <TouchableOpacity
-                      onPress={() => navigation.navigate("PetProfilePage", {pet})}
+                      onPress={() =>
+                        navigation.navigate("PetProfilePage", { pet })
+                      }
                       style={styles.card_button}
                     >
                       <Text
@@ -155,7 +161,13 @@ function HomePage ({ navigation}) {
                 <View style={styles.reminder_container}>
                   <Image style={styles.pet_image} source={task.petImg}></Image>
                   <View>
-                    <Text style={styles.reminder_text_top}>{task.message}</Text>
+                    <Text
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
+                      style={styles.reminder_text_top}
+                    >
+                      {task.message}
+                    </Text>
                     <Text style={styles.reminder_text_bottom}>
                       At {task.time}
                     </Text>
@@ -164,15 +176,14 @@ function HomePage ({ navigation}) {
                     trackColor={{ false: "#767577", true: "#F7945E" }}
                     thumbColor={task.alarm ? "#f4f3f4" : "#f4f3f4"}
                     onValueChange={() => {
-                      const updatedAlarm = { ...task, alarm: !task.alarm }
-                      updateAlarm(updatedAlarm)
+                      const updatedAlarm = { ...task, alarm: !task.alarm };
+                      updateAlarm(updatedAlarm);
                     }}
                     value={task.alarm}
                   ></Switch>
                 </View>
               </View>
             ))}
-            
           </View>
         </ImageBackground>
       </ScrollView>
@@ -256,6 +267,7 @@ const styles = StyleSheet.create({
   card_text: {
     fontFamily: "Lato-Reg",
     fontSize: 16,
+    maxWidth: 150
   },
   card_button: {
     backgroundColor: "#F7945E",
@@ -349,6 +361,7 @@ const styles = StyleSheet.create({
   },
   reminder_text_top: {
     fontFamily: "Lato-Reg",
+    maxWidth: 120
   },
   reminder_text_bottom: {
     fontFamily: "Lato-Reg",

@@ -16,13 +16,34 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 
+import Carousel from "pinar";
+
+
 function PetProfilePage({navigation, route}) {
   const { database } =
     useFakeDatabase();
 
 const { pet } = route?.params ?? { pet: Object.values(database.FakeUser.pets)[0] };
 
-const currentDate = new Date().toLocaleDateString("en-US", {
+const today = new Date()
+
+const currentDate = today.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "numeric",
+  day: "numeric",
+});
+
+const tomorrow = new Date(today);
+tomorrow.setDate(today.getDate() + 1);
+const tomorrowDate = tomorrow.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "numeric",
+  day: "numeric",
+});
+
+const dayAfterTomorrow = new Date(today);
+dayAfterTomorrow.setDate(today.getDate() + 2);
+const dayAfterTomorrowFormatted = dayAfterTomorrow.toLocaleDateString("en-US", {
   year: "numeric",
   month: "numeric",
   day: "numeric",
@@ -32,6 +53,9 @@ const currentDate = new Date().toLocaleDateString("en-US", {
 
   const petReminders = todayReminders.filter(reminder => (reminder.petId === pet?.id) && (reminder.date === currentDate) && (reminder.completed === false))
 
+  const tomorrowReminders = todayReminders.filter(reminder => (reminder.petId === pet?.id) && (reminder.date === tomorrowDate) && (reminder.completed === false))
+
+  const dayAfterTomorrowReminders = todayReminders.filter(reminder => (reminder.petId === pet?.id) && (reminder.date === tomorrowDate) && (reminder.completed === false))
 
   const allReminders = Object.values(database.FakeUser.reminders).filter(
     (tasks) => tasks.petId === pet.id
@@ -83,9 +107,9 @@ const currentDate = new Date().toLocaleDateString("en-US", {
             <Text style={{ fontFamily: "Lato-Reg" }}>
               {pet?.age} Years, {pet?.breed}{" "}
             </Text>
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
               <FontAwesome5 name="edit" size={13} color="grey" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
 
@@ -110,46 +134,205 @@ const currentDate = new Date().toLocaleDateString("en-US", {
               </View>
             </View>
           </View>
-
           <View style={styles.snippet_outer}>
             <View style={styles.snippet_container}>
-              <View style={styles.snippet_header}>
-                <View style={styles.date_container}>
-                  <FontAwesome name="paw" size={18} color="#F7945E" />
-                  <Text style={{ marginLeft: 7, fontFamily: "Lato-Light" }}>
-                    Today
-                  </Text>
-                  <Text style={{ fontFamily: "Lato-Bold", color: "#F7945E" }}>
-                    {" "}
-                    {petReminders.length}
-                  </Text>
-                </View>
-                <TouchableOpacity onPress={() => navigation.navigate('Reminders')}>
-                <Entypo name="plus" size={20} color="#F7945E" />
-                </TouchableOpacity>
-              </View>
+              <Carousel showsControls={false} height={160} width={130}>
+                <View>
+                  <View style={styles.snippet_header}>
+                    <View style={styles.date_container}>
+                      <FontAwesome name="paw" size={18} color="#F7945E" />
+                      <Text style={{ marginLeft: 7, fontFamily: "Lato-Light" }}>
+                        Today
+                      </Text>
+                      <Text
+                        style={{ fontFamily: "Lato-Bold", color: "#F7945E" }}
+                      >
+                        {" "}
+                        {petReminders.length}
+                      </Text>
+                    </View>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("Reminders")}
+                    >
+                      <Entypo name="plus" size={20} color="#F7945E" />
+                    </TouchableOpacity>
+                  </View>
 
-              {/* Map out today's reminders */}
-              <View style={{alignItems: 'center'}}>
+                  {/* Map out today's reminders */}
+                  <View style={{ alignItems: "center" }}>
+                    <ScrollView style={{ height: 95, width: "100%" }}>
+                      {petReminders.map((reminder) => (
+                        <View key={reminder.id}>
+                          <View style={styles.snippet_task}>
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                marginLeft: 4,
+                                maxWidth: 100
+                              }}
+                            >
+                              <Image
+                                style={{ width: 17, height: 17 }}
+                                source={orange}
+                              />
+                              <Text
+                                numberOfLines={1}
+                                ellipsizeMode="tail"
+                                style={{
+                                  fontFamily: "Lato-Reg",
+                                  fontSize: 13,
+                                  marginLeft: 10,
+                                }}
+                              >
+                                {reminder.message}
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      ))}
+                    </ScrollView>
 
-                <ScrollView style={{height: 95, width: '100%'}}>
-                {petReminders.map(reminder => (
-                    <View key={reminder.id}>
-                <View style={styles.snippet_task}>
-                  <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 4,}}>
-                <Image style={{width: 17, height: 17}} source={orange}/>
-                <Text style={{fontFamily: 'Lato-Reg', fontSize: 13, marginLeft: 10}}>{reminder.message}</Text>
+                    {/* <TouchableOpacity>
+                  <Image source={showmore} />
+                </TouchableOpacity> */}
                   </View>
                 </View>
-                    </View>
-                ))}
-                </ScrollView>
 
-                <TouchableOpacity>
+                {/* TOMORROW */}
+
+                <View>
+                  <View style={styles.snippet_header}>
+                    <View style={styles.date_container}>
+                      <FontAwesome name="paw" size={18} color="#F7945E" />
+                      <Text style={{ marginLeft: 7, fontFamily: "Lato-Light" }}>
+                        Tomorrow
+                      </Text>
+                      <Text
+                        style={{ fontFamily: "Lato-Bold", color: "#F7945E" }}
+                      >
+                        {" "}
+                        {tomorrowReminders.length}
+                      </Text>
+                    </View>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("Reminders")}
+                    >
+                      <Entypo name="plus" size={20} color="#F7945E" />
+                    </TouchableOpacity>
+                  </View>
+
+                  {/* Map out today's reminders */}
+                  <View style={{ alignItems: "center" }}>
+                    <ScrollView style={{ height: 95, width: "100%" }}>
+                      {tomorrowReminders.map((reminder) => (
+                        <View key={reminder.id}>
+                          <View style={styles.snippet_task}>
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                marginLeft: 4,
+                                maxWidth: 100,
+                              }}
+                            >
+                              <Image
+                                style={{ width: 17, height: 17 }}
+                                source={orange}
+                              />
+                              <Text
+                                numberOfLines={1}
+                                ellipsizeMode="tail"
+                                style={{
+                                  fontFamily: "Lato-Reg",
+                                  fontSize: 13,
+                                  marginLeft: 10,
+                                }}
+                              >
+                                {reminder.message}
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      ))}
+                    </ScrollView>
+
+                    {/* <TouchableOpacity>
                   <Image source={showmore} />
-                </TouchableOpacity>
-                
-              </View>
+                </TouchableOpacity> */}
+                  </View>
+                </View>
+
+                {/* DAYAFTERTOMORROW */}
+
+                <View>
+                  <View style={styles.snippet_header}>
+                    <View style={styles.date_container}>
+                      <FontAwesome name="paw" size={18} color="#F7945E" />
+                      <Text
+                        style={{
+                          marginLeft: 7,
+                          fontFamily: "Lato-Light",
+                          fontSize: 10,
+                        }}
+                      >
+                        Day After Tmrw
+                      </Text>
+                      <Text
+                        style={{ fontFamily: "Lato-Bold", color: "#F7945E" }}
+                      >
+                        {" "}
+                        {dayAfterTomorrowReminders.length}
+                      </Text>
+                    </View>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("Reminders")}
+                    >
+                      <Entypo name="plus" size={20} color="#F7945E" />
+                    </TouchableOpacity>
+                  </View>
+
+                  {/* Map out today's reminders */}
+                  <View style={{ alignItems: "center" }}>
+                    <ScrollView style={{ height: 95, width: "100%" }}>
+                      {dayAfterTomorrowReminders.map((reminder) => (
+                        <View key={reminder.id}>
+                          <View style={styles.snippet_task}>
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                marginLeft: 4,
+                                maxWidth: 100,
+                              }}
+                            >
+                              <Image
+                                style={{ width: 17, height: 17 }}
+                                source={orange}
+                              />
+                              <Text
+                                numberOfLines={1}
+                                ellipsizeMode="tail"
+                                style={{
+                                  fontFamily: "Lato-Reg",
+                                  fontSize: 13,
+                                  marginLeft: 10,
+                                }}
+                              >
+                                {reminder.message}
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      ))}
+                    </ScrollView>
+
+                    {/* <TouchableOpacity>
+                  <Image source={showmore} />
+                </TouchableOpacity> */}
+                  </View>
+                </View>
+              </Carousel>
             </View>
           </View>
         </View>
@@ -163,13 +346,48 @@ const currentDate = new Date().toLocaleDateString("en-US", {
               </Text>
             </View>
             <View style={styles.calendar_days}>
-              <DayButton remindersByDay={remindersByDay} pet={pet} day="Mo" initialState={orange} />
-              <DayButton remindersByDay={remindersByDay} pet={pet} day="Tu" initialState={orange} />
-              <DayButton remindersByDay={remindersByDay} pet={pet} day="We" initialState={orange} />
-              <DayButton remindersByDay={remindersByDay} pet={pet} day="Th" initialState={orange} />
-              <DayButton remindersByDay={remindersByDay} pet={pet} day="Fr" initialState={orange} />
-              <DayButton remindersByDay={remindersByDay} pet={pet} day="Sa" initialState={orange} />
-              <DayButton remindersByDay={remindersByDay} pet={pet} day="Su" initialState={orange} />
+              <DayButton
+                remindersByDay={remindersByDay}
+                pet={pet}
+                day="Mo"
+                initialState={orange}
+              />
+              <DayButton
+                remindersByDay={remindersByDay}
+                pet={pet}
+                day="Tu"
+                initialState={orange}
+              />
+              <DayButton
+                remindersByDay={remindersByDay}
+                pet={pet}
+                day="We"
+                initialState={orange}
+              />
+              <DayButton
+                remindersByDay={remindersByDay}
+                pet={pet}
+                day="Th"
+                initialState={orange}
+              />
+              <DayButton
+                remindersByDay={remindersByDay}
+                pet={pet}
+                day="Fr"
+                initialState={orange}
+              />
+              <DayButton
+                remindersByDay={remindersByDay}
+                pet={pet}
+                day="Sa"
+                initialState={orange}
+              />
+              <DayButton
+                remindersByDay={remindersByDay}
+                pet={pet}
+                day="Su"
+                initialState={orange}
+              />
             </View>
           </View>
         </View>
@@ -333,6 +551,7 @@ const styles = StyleSheet.create({
 
   date_container: {
     flexDirection: "row",
+    alignItems: 'center'
   },
   calendar_outer: {
     marginTop: 10,
