@@ -14,37 +14,37 @@ import { FakeDatabaseProvider } from './context/FakeDataBase';
 
 export default function App() {
   
-  const [fakeLogin, setFakeLogin] = useState(false);
+  // const [fakeLogin, setFakeLogin] = useState(false);
 
 
   const Stack = createStackNavigator();
 
-  const fakeSignIn = (data) => {
-    setFakeLogin(data)
-  }
+  // const fakeSignIn = (data) => {
+  //   setFakeLogin(data)
+  // }
 
   return (
     <FakeDatabaseProvider>
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaProvider>
         <NavigationContainer>
-          {fakeLogin ? (
+          {/* {fakeLogin ? ( */}
             <NavigationBar></NavigationBar>
-          ) : (
-            <ImageBackground source={background} style={styles.view_container}>
+          {/* ) : ( */}
+            {/* <ImageBackground source={background} style={styles.view_container}>
               <Stack.Navigator
                 screenOptions={{
                   headerShown: false,
                 }}
-              >
-                <Stack.Screen name="LoginPage">
+              > */}
+                {/* <Stack.Screen name="LoginPage">
                   {(props) => <LoginPage {...props} setFakeLogin={setFakeLogin}/>}
-                </Stack.Screen>
+                </Stack.Screen> */}
                 
                 {/* <Stack.Screen name="SignUpPage" component={SignUpPage} /> */}
-              </Stack.Navigator>
-            </ImageBackground>
-          )}
+              {/* </Stack.Navigator>
+            </ImageBackground> */}
+          {/* )} */}
         </NavigationContainer>
       </SafeAreaProvider>
     </GestureHandlerRootView>
